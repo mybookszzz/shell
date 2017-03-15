@@ -54,6 +54,61 @@ function nginx_install(){
 	&& make && make install
 }
 
+function nginx_service_install(){
+	[ -f /etc/rc.d/init.d/nginx ] && { echo "nginx server has already existed "; exit;} 
+	
+	touch /etc/rc.d/init.d/nginx
+	chmod 755 /etc/rc.d/init.d/nginx
+	cat >>/etc/rc.d/init.d/nginx <<"EOF"
+#!/bin/bash
+
+Nginx_bin=/usr/local/nginx/sbin/nginx
+Nginx_Pid=`ps -ef|grep nginx|grep master|awk '{print $2}'`
+
+function start(){
+	if [ -z $Nginx_Pid ];then
+		echo "nging is ready to start"
+		$Nginx_bin -t && $Nginx_bin && echo "nginx have started"
+	else
+		echo "nginx has already runing..."
+	fi
+}
+function stop(){
+	if [ -n $Nginx_Pid ];then
+		echo "nginx is ready to stop"
+		kill -15 $Nginx_Pid
+		echo "nginx have stoped"
+	fi
+}
+function status(){
+		ps -ef|grep nginx
+}
+function restart(){
+	stop
+	start
+}
+
+case "$1" in 
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	status)
+		status
+		;;
+	*)
+		echo "Usage:$0 {start|stop|restart}"
+esac
+EOF
+}
+
 
 get_prg
 nginx_install
+nginx_service_install
