@@ -24,3 +24,5 @@ CLASSPATH=$JAVA_HOME/lib/
 PATH=$PATH:$JAVA_HOME/bin
 export PATH JAVA_HOME CLASSPATH
 EOF
+
+source /etc/profile
