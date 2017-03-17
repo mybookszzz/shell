@@ -4,8 +4,12 @@
 #date:2017-03-17
 #system:centos6.8 minimal
 
+
 #mysql_server依赖包
 yum install numactl
+
+which rz || { yum install lrzsz;}
+which perl || { yum install perl;}
 
 echo "使用rpm包安装mysql"
 echo "请上传mysql bundle包"
@@ -26,9 +30,21 @@ rpm -vih mysql-community-libs-*.rpm
 rpm -vih mysql-community-client-*.rpm
 rpm -vih mysql-community-server-*.rpm
 
-
+echo "请检查原mysql配置文件"
+cat /etc/my.cnf
+while true;do
+read -p "检验/etc/my.cnf,是否正确(Yes/No)?" boolen
+if [ $boolen = "Yes" ];then
+	cp /etc/my.cnf /etc/my.cnf.`date +%F`
+	echo "备份/etc/my.cnf为/etc/my.cnf.`date +%F`"
+	break
+elif [ $boolen = "No" ];then
+	exit 1
+else	
+	echo "输入不正确，请重新输入"
+fi
+done
 #my.cnf设置
-cp /etc/my.cnf /etc/my.cnf.init
 cat >> /etc/my.cnf <<'EOF'
 innodb_rollback_on_timeout=1
 innodb_lock_wait_timeout=600
