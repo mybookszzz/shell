@@ -44,8 +44,16 @@ echo "新版本号"
 /usr/local/python27/bin/python2.7 -V
 echo "旧版本号"
 /usr/bin/python -V
+
+now_python=`python --version 2>&1`
+if [ $now_python=="Python 2.6.6" ];then
 cp /usr/bin/python /usr/bin/python2.6.6
 ln -s -f /usr/local/python27/bin/python2.7 /usr/bin/python
+fi
 
 echo "修改yum文件/usr/bin/yum"
 sed -i "s@#!/usr/bin/python@#!/usr/bin/python2.6.6@" /usr/bin/yum
+
+echo "修改pip"
+wget wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py

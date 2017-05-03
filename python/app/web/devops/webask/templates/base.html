@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <title>{% block tile %}operation{% endblock %}</title>
+    </head>
+    <body>
+        {% include 'nav.html' %}
+        {% block content %}
+        <div>
+            welcome 
+        </div>
+        {% endblock %}
+        {% include 'bottom.html' %}
+    </body>
+</html>
