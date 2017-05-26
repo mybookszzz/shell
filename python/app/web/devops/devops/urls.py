@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from webask import views as webask_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^home/',webask_views.home,name='home'),
 ]

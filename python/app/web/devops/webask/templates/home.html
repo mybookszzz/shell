@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}服务器查看工具{% endblock %}
+{% block left %}
+<div>
+<ul>
+<li>
+内网
+</li>
+{% for i in innerIP %}
+<li>{{ i.0 }}</li>
+{% endfor %}
+<li>
+外网
+</li>
+{% for i in pubIP %}
+<li>{{ i.0 }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<div>
+日志查看
+数据查看
+</div>
+<div>
+</div>
+{% endblock %}

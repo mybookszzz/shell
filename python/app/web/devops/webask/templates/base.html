@@ -5,6 +5,11 @@
     </head>
     <body>
         {% include 'nav.html' %}
+        {% block left %}
+        <div>
+            left
+        </div>
+        {% endblock %}
         {% block content %}
         <div>
             welcome 
